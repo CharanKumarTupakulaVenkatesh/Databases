@@ -45,4 +45,4 @@ Delete a from Person a,Person b
 where a.email=b.email and a.id > b.id
 
 Method2:
-DELETE FROM Person where id not in (select min(id) from Person Group by id,email)
+DELETE FROM Person where id not in (select * from (select min(id) from Person Group by id,email) as a);
