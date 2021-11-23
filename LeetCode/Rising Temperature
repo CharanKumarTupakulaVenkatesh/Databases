@@ -43,6 +43,9 @@ In 2015-01-02, the temperature was higher than the previous day (10 -> 25).
 In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
 
 Solution:
-
+Method 1:
 select b.id from Weather a, Weather b where b.recordDate=dateadd(day,1,a.recordDate)
 and a.temperature < b.temperature
+
+Method2:
+Select a.id from Weather a where a.temperature > (select b.temperature from Weather b where b.recordDate=dateadd(day,-1,a.recordDate))
