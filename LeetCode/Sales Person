@@ -104,3 +104,12 @@ where s.sales_id not in (
  inner join Company c on o.com_id=c.com_id and c.name='RED'
 ) 
 
+
+METHOD 2:
+
+select distinct ss.name from SalesPerson ss
+except
+(SELECT DISTINCT s.name from Orders o 
+ join SalesPerson s on s.sales_id = o.sales_id 
+ and o.com_id in (select com_id from Company where name='RED')
+ 
