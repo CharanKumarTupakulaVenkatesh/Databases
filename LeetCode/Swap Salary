@@ -55,3 +55,11 @@ update b
 set b.sex=a.gender
 from Salary b inner join (select id,case when sex='m' then 'f' else 'm' end as gender from Salary) a 
 on a.id=b.id
+
+
+Method 2:
+
+UPDATE SALARY
+SET SEX=CASE WHEN SEX='m' then 'f' else 'm' end
+
+
