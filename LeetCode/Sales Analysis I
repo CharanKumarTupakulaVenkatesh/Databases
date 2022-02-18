@@ -65,6 +65,14 @@ Explanation: Both sellers with id 1 and 3 sold products with the most total pric
 
 SOLUTION:
 
+----------------MOST EFFECTIVE WAY------METHOD 1------------
+with MostSeller as 
+(select seller_id ,rank() over(order by sum(price) desc) as rn from Sales group by seller_id 
+)
+select seller_id from MostSeller where rn=1
+
+
+----------------------------MEHTOD 2------------------
 select seller_id from 
 ( select seller_id ,rank() over(order by sum(price) desc) as rn 
  from Sales
@@ -72,7 +80,7 @@ select seller_id from
  ) a
  where rn=1
 
--------------------METHOD 2-------------------------------
+-------------------METHOD 3-------------------------------
  with cte1 as
 (select seller_id , sum(price) as price from sales
 group by seller_id),
@@ -82,7 +90,7 @@ select seller_id, dense_rank() over(order by price desc) as dnr
 from cte1
 )
 select seller_id from cte2 where dnr =1 
--------------------------METHOD 3------------------------
+-------------------------METHOD 4------------------------
 SELECT seller_id
 FROM Sales
 GROUP BY seller_id
