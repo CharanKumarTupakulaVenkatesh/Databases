@@ -71,3 +71,19 @@ select seller_id from
  group by seller_id
  ) a
  where rn=1
+
+-------------------METHOD 2-------------------------------
+ with cte1 as
+(select seller_id , sum(price) as price from sales
+group by seller_id),
+cte2 as
+(
+select seller_id, dense_rank() over(order by price desc) as dnr
+from cte1
+)
+select seller_id from cte2 where dnr =1 
+-------------------------METHOD 3------------------------
+SELECT seller_id
+FROM Sales
+GROUP BY seller_id
+HAVING SUM(price) >= ALL(SELECT SUM(price) FROM Sales GROUP BY seller_id);
